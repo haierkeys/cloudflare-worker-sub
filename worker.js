@@ -3025,6 +3025,7 @@ var src_default = {
       }
     }
     const newUrl = replacedURIs.join("|");
+    console.log(newUrl);
     url.searchParams.set("url", newUrl);
     const modifiedRequest = new Request(backend + url.pathname + url.search, request);
     const rpResponse = await fetch(modifiedRequest);
