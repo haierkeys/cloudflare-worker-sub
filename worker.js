@@ -3024,7 +3024,6 @@ var src_default = {
         }
       }
     }
-    console.log(replacedURIs);
     const newUrl = replacedURIs.join("|");
     url.searchParams.set("url", newUrl);
     const modifiedRequest = new Request(backend + url.pathname + url.search, request);
@@ -3233,7 +3232,7 @@ function replaceHysteria2(link, replacements) {
     return;
   }
   const server = regexMatch[1];
-  const randomDomain = generateRandomStr(12) + ".com";
+  const randomDomain = generateRandomStr(6) +"@"+ generateRandomStr(6) + ".com";
   replacements[randomDomain] = server;
   return link.replace(server, randomDomain);
 }
