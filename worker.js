@@ -3233,9 +3233,9 @@ function replaceHysteria2(link, replacements) {
     return;
   }
   const server = regexMatch[1];
-  const randomDomain = generateRandomStr(6) +"@"+ generateRandomStr(6) + ".com";
+  const randomDomain =generateRandomStr(12) + ".com";
   replacements[randomDomain] = server;
-  return link.replace(server, randomDomain);
+  return link.replace(server, generateRandomStr(6) + "@" + randomDomain);
 }
 
 function replaceYAML(yamlObj, replacements) {
