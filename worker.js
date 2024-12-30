@@ -2920,7 +2920,7 @@ var src_default = {
   async fetch(request, env) {
     const url = new URL(request.url);
     const host = url.origin;
-    const frontendUrl = 'https://raw.githubusercontent.com/bulianglin/psub/main/frontend.html';
+    const frontendUrl = 'https://raw.githubusercontent.com/haierkeys/cloudflare-worker-sub/main/frontend.html';
     const SUB_BUCKET = env.SUB_BUCKET;
     let backend = env.BACKEND.replace(/(https?:\/\/[^/]+).*$/, "$1");
     const subDir = "subscription";
@@ -2995,7 +2995,7 @@ var src_default = {
         } else {
           parsedObj = parseData(url2);
         }
-        if (/^(ssr?|vmess1?|trojan|vless|hysteria):\/\//.test(url2)) {
+        if (/^(ssr?|vmess1?|trojan|vless|hysteria|hysteria2):\/\//.test(url2)) {
           const newLink = replaceInUri(url2, replacements, false);
           if (newLink)
             replacedURIs.push(newLink);
@@ -3069,6 +3069,8 @@ function replaceInUri(link, replacements, isRecovery) {
       return replaceTrojan(link, replacements, isRecovery);
     case link.startsWith("hysteria://"):
       return replaceHysteria(link, replacements);
+    case link.startsWith("hysteria2://"):
+      return replaceHysteria2(link, replacements);
     default:
       return;
   }
@@ -3223,6 +3225,18 @@ function replaceHysteria(link, replacements) {
   replacements[randomDomain] = server;
   return link.replace(server, randomDomain);
 }
+
+function replaceHysteria2(link, replacements) {
+  const regexMatch = link.match(/hysteria2:\/\/(.*):(.*?)\?/);
+  if (!regexMatch) {
+    return;
+  }
+  const server = regexMatch[1];
+  const randomDomain = generateRandomStr(12) + ".com";
+  replacements[randomDomain] = server;
+  return link.replace(server, randomDomain);
+}
+
 function replaceYAML(yamlObj, replacements) {
   if (!yamlObj.proxies) {
     return;
